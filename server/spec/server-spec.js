@@ -82,7 +82,7 @@ describe('Persistent Node Chat Server', function() {
     });
   });
 
-  xit('Should output all messages from the DB', function(done) {
+  it('Should output all messages from the DB', function(done) {
     // Let's insert a message into the db
     var queryString = 'INSERT INTO rooms (room) VALUES ("lobby");';
     var queryArgs = [];
@@ -102,8 +102,8 @@ describe('Persistent Node Chat Server', function() {
           // the message we just inserted:
           request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
             var messageLog = JSON.parse(body);
-            expect(messageLog[0].text).to.equal('hello');
-            expect(messageLog[0].roomname).to.equal('lobby');
+            expect(messageLog[0].message).to.equal('hello');
+            expect(messageLog[0].room).to.equal('lobby');
             done();
           });
         });

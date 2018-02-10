@@ -10,7 +10,17 @@ var headers = {
 
 module.exports = {
   messages: {
-    get: function (req, res) {}, // a function which handles a get request for all messages
+    get: function (req, res) {
+      models.messages.get((err, results) =>{
+        if (err) {
+          res.writeHead(500, headers);
+          res.end(JSON.stringify(err));
+          return;
+        }
+        res.writeHead(200, headers);
+        res.end(JSON.stringify(results));
+      });
+    }, // a function which handles a get request for all messages
     post: function (req, res) {  
       models.messages.post(req.body, function() {
         res.writeHead(201, headers);

@@ -3,10 +3,13 @@ var db = require('../db/index');
 module.exports = {
   messages: {
     get: function (callback) {
-      var query = 'SELECT * FROM messages;';
+      var query = 'SELECT messages.message, rooms.room, usernames.username ' +  
+                    'FROM messages INNER JOIN rooms ON rooms.id = messages.room ' + 
+                    'INNER JOIN usernames ON usernames.id = messages.username;';
       var queryArgs = [];
       db.query(query, queryArgs, function(err, results) {
-        callback(results);
+        console.log('results: ' + JSON.stringify(results));
+        callback(err, results);
       });
     }, // a function which produces all the messages
     post: function (messageObj, callback) {

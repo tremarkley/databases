@@ -8,7 +8,7 @@ module.exports = {
                     'INNER JOIN usernames ON usernames.id = messages.username;';
       var queryArgs = [];
       db.query(query, queryArgs, function(err, results) {
-        console.log('results: ' + JSON.stringify(results));
+        // console.log('results: ' + JSON.stringify(results));
         callback(err, results);
       });
     }, // a function which produces all the messages
@@ -27,7 +27,7 @@ module.exports = {
               var usernameID = results[0].id;
               var query = `insert into messages (roomname, username, text) value (${roomID}, ${usernameID}, "${messageObj.text}")`;
               db.query(query, function(err, results) {
-                console.log('final results: ' + JSON.stringify(results));
+                // console.log('final results: ' + JSON.stringify(results));
                 callback(results);
               });
             });

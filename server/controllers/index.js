@@ -23,21 +23,10 @@ module.exports = {
       });
     }, // a function which handles a get request for all messages
     post: function (req, res) {  
-      var body = '';
-      req.on('data', (chunk)=>{
-        body += chunk;
+      models.messages.post(req.body, function() {
+        res.writeHead(201, headers);
+        res.end(JSON.stringify({results: 'POST SUCCESS'}));
       });
-      
-      req.on('end', ()=>{
-        models.messages.post(qs.parse(body), function() {
-          res.writeHead(201, headers);
-          res.end(JSON.stringify({Result: "success"}));
-        });
-      });
-      // models.messages.post(req.body, function() {
-      //   res.writeHead(201, headers);
-      //   res.end();
-      // });
     } // a function which handles posting a message to the database
   },
 

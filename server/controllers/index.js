@@ -1,4 +1,5 @@
 var models = require('../models');
+var qs = require('querystring');
 
 var headers = {
   'access-control-allow-origin': '*',
@@ -18,14 +19,25 @@ module.exports = {
           return;
         }
         res.writeHead(200, headers);
-        res.end(JSON.stringify(results));
+        res.end(JSON.stringify({results: results}));
       });
     }, // a function which handles a get request for all messages
     post: function (req, res) {  
-      models.messages.post(req.body, function() {
-        res.writeHead(201, headers);
-        res.end();
+      var body = '';
+      req.on('data', (chunk)=>{
+        body += chunk;
       });
+      
+      req.on('end', ()=>{
+        models.messages.post(qs.parse(body), function() {
+          res.writeHead(201, headers);
+          res.end(JSON.stringify({Result: "success"}));
+        });
+      });
+      // models.messages.post(req.body, function() {
+      //   res.writeHead(201, headers);
+      //   res.end();
+      // });
     } // a function which handles posting a message to the database
   },
 

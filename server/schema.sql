@@ -1,4 +1,4 @@
-DROP DATABASE chat;
+DROP DATABASE IF EXISTS chat;
 
 CREATE DATABASE chat;
 
@@ -28,6 +28,10 @@ CREATE TABLE usernames (
 
 ALTER TABLE messages ADD FOREIGN KEY (username) REFERENCES usernames (id);
 ALTER TABLE messages ADD FOREIGN KEY (roomname) REFERENCES rooms (id);
+
+INSERT INTO rooms (roomname) VALUE ("lobby");
+INSERT INTO usernames (username) VALUE ("Steve Jobs");
+INSERT INTO messages (roomname, username, text) value (1, 1, "Those who are crazy enough to think they can change the world usually do.");
 /*  Execute this file from the command line by typing:
  *    mysql -u root < server/schema.sql
  *  to create the database and the tables.*/
